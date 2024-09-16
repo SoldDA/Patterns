@@ -63,19 +63,35 @@ class Student (
         github = newGitHub
     }
 
-    fun isValidPhone(): Boolean {
-        return phone != null && phone!!.length == 11 && phone!!.startsWith("7")
+    init {
+        require(lastName.isNotBlank()) {"Фамилия должна быть указана"}
+        require(firstName.isNotBlank()) {"Имя должно быть указано"}
+        phone?.let { require(isValidPhone(it)) { "Неверный формат телефона" } }
+        email?.let { require(isValidEmail(it)) { "Неверный формат почты" } }
+        github?.let { require(isValidGit(it)) { "Неверный формат гита" } }
     }
-
-    fun validate(): Boolean {
-        return isValidPhone() && (telegram != null || email != null || github != null)
-    }
-
-    fun setContacts(contacts: Map<String, String>) {
-        phone = contacts["phone"]
-        telegram = contacts["telegram"]
-        email = contacts["email"]
-        github = contacts["github"]
+    companion object {
+        fun isValidPhone(phone: String): Boolean {
+            return phone.matches(Regex("^\\+?\\d{11}$"))
+        }
+        fun isValidEmail(email: String): Boolean {
+            return email.matches(Regex("^[a-zA-Z0-9.%_+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}\$"))
+        }
+        fun isValidGit(github: String): Boolean {
+            return github.matches(Regex("^https://github\\.com/[a-zA-Z0-9_-]+/?\$"))
+        }
+        fun createStudent(vararg args: Pair<String, Any?>): Student {
+            val map = args.toMap()
+            return Student(
+                id = map["ID"] as Int,
+                lastName = map["Фамилия"] as String,
+                firstName = map["Имя"] as String,
+                middleName = map["Отчество"] as String,
+                phone = map["Телефон"] as String?,
+                email = map["Почта"] as String?,
+                github = map["Гит"] as String?
+            )
+        }
     }
 
     override fun toString(): String {
@@ -89,5 +105,23 @@ class Student (
             E-mail: ${email}
             GitHub: ${github}
         """.trimIndent()
+    }
+
+    fun validate(): Boolean {
+        return hasGit() && hasAnyContact()
+    }
+
+    private fun hasGit(): Boolean {
+        return !github.isNullOrEmpty()
+    }
+
+    private fun hasAnyContact(): Boolean {
+        return !phone.isNullOrEmpty() || !email.isNullOrEmpty() || telegram.isNullOrEmpty()
+    }
+
+    fun setContacts(phone: String? = null, telegram: String? = null, email: String? = null) {
+        this.phone = phone?.takeIf { isValidPhone(it) }
+        this.telegram = telegram
+        this.email = email?.takeIf { isValidEmail(it) }
     }
 }
