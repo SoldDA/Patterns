@@ -49,13 +49,6 @@ class Student : BaseStudent {
         get() {
             return field
         }
-    var github: String? = null
-        set(value) {
-            if (isValidGit(value)) field = value
-        }
-        get() {
-            return field
-        }
 
     companion object {
         fun readFile(path: String): MutableList<Student> {
@@ -96,7 +89,7 @@ class Student : BaseStudent {
             Телефон: ${phone}
             Telegram: ${telegram}
             E-mail: ${email}
-            GitHub: ${github}
+            GitHub: ${git}
         """.trimIndent()
     }
 
@@ -105,7 +98,7 @@ class Student : BaseStudent {
     }
 
     private fun hasGit(): Boolean {
-        return !github.isNullOrEmpty()
+        return !git.isNullOrEmpty()
     }
 
     private fun hasAnyContact(): Boolean {
@@ -133,7 +126,7 @@ class Student : BaseStudent {
         phone = Phone
         telegram = Telegram
         email = Email
-        github = GitHub
+        git = GitHub
     }
 
     constructor(hashStudent: HashMap<String, Any?>) {
@@ -144,7 +137,7 @@ class Student : BaseStudent {
         phone = hashStudent.getOrDefault("phone", null).toString()
         telegram = hashStudent.getOrDefault("telegram", null).toString()
         email = hashStudent.getOrDefault("email", null).toString()
-        github = hashStudent.getOrDefault("github", null).toString()
+        git = hashStudent.getOrDefault("github", null).toString()
     }
 
     // Конструктор принимающий строку и парсинг её
@@ -155,13 +148,9 @@ class Student : BaseStudent {
 
     // Метод GetInfo
     fun getInfo(): String {
-        val fullname = lastName + " " + firstName[0] + "." + middleName[0] + ". "
-        val gitHubLink = github?.let { "GitHub: $it" } ?: ""
-        val contactInfo = listOfNotNull(
-            phone?.let { "Телефон: $it" },
-            telegram?.let { "Телеграмм: $it" },
-            email?.let { "Почта: $it" }
-        ).joinToString(", ")
+        val fullname = getFullName()
+        val gitHubLink = getGitLink()
+        val contactInfo = getContactInfo()
         return "$fullname; $gitHubLink; $contactInfo"
     }
 
@@ -170,7 +159,7 @@ class Student : BaseStudent {
     }
 
     fun getGitLink(): String {
-        return github?.let { "GitHub: $it" } ?: ""
+        return git?.let { "GitHub: $it" } ?: ""
     }
 
     fun getContactInfo(): String {
