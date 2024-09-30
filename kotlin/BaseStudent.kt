@@ -8,7 +8,13 @@ open class BaseStudent {
         get() {
             return field
         }
-
+    var git: String? = null
+        set(value) {
+            field = value
+        }
+        get() {
+            return field
+        }
     companion object {
         var id_student = 0
 
