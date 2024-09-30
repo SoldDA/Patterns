@@ -1,14 +1,9 @@
 package main.kotlin
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.IOException
 
-class Student {
-    var id: Int = -1
-        set(value) {
-            if (value > 0) field = value
-        }
-        get() {
-            return field
-        }
-
+class Student : BaseStudent {
     var lastName: String = ""
         set(value) {
             if (isValidNames(value)) field = value
@@ -62,23 +57,33 @@ class Student {
             return field
         }
 
-    companion object
-    {
-        var id_student = 0
-        private fun isValidPhone(phone: String?): Boolean {
-            return phone?.matches(Regex("^\\+?\\d{11}$")) ?: true
+    companion object {
+        fun readFile(path: String): MutableList<Student> {
+            val file = File(path)
+            var result = mutableListOf<Student>()
+            var text: List<String> = listOf()
+
+            try {
+                text = file.readLines()
+                println(text)
+            }
+            catch (e: FileNotFoundException) {
+                println("Файл не найден")
+            }
+            catch (e: IOException) {
+                println("Ошибка чтения файла")
+            }
+
+            for (line in text) result.add(Student(line))
+            return result
         }
-        private fun isValidEmail(email: String?): Boolean {
-            return email?.matches(Regex("^[a-zA-Z0-9.%_+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}\$")) ?: true
-        }
-        private fun isValidGit(github: String?): Boolean {
-            return github?.matches(Regex("^https://github\\.com/[a-zA-Z0-9_-]+/?\$")) ?: true
-        }
-        private fun isValidNames(value: String): Boolean {
-            return value.matches(Regex("[А-Я]{1}[а-я]*"))
-        }
-        private fun isValidTelegram(value: String?): Boolean {
-            return value?.matches(Regex("""\@{1}.*""")) ?: true
+
+        fun writeFile(path: String, sList: MutableList<Student>) {
+            val file = File(path)
+            var text = ""
+
+            for (student in sList) text += (student.toString() + "\n")
+            file.writeText(text)
         }
     }
 
@@ -113,11 +118,7 @@ class Student {
         if (Mail != null && isValidEmail(Mail)) email = Mail
     }
 
-    init {
-        id_student++
-    }
-
-    constructor(LastName:String, FirstName:String, MiddleName:String) {
+    constructor(LastName: String, FirstName: String, MiddleName: String) {
         id = id_student
         lastName = LastName
         firstName = FirstName
@@ -144,5 +145,39 @@ class Student {
         telegram = hashStudent.getOrDefault("telegram", null).toString()
         email = hashStudent.getOrDefault("email", null).toString()
         github = hashStudent.getOrDefault("github", null).toString()
+    }
+
+    // Конструктор принимающий строку и парсинг её
+    constructor(input:String): this (input.split(" ")[0],input.split(" ")[1],input.split(" ")[2],input.split(" ").getOrNull(3),input.split(" ").getOrNull(4),input.split(" ").getOrNull(5),input.split(" ").getOrNull(6))
+    {
+
+    }
+
+    // Метод GetInfo
+    fun getInfo(): String {
+        val fullname = lastName + " " + firstName[0] + "." + middleName[0] + ". "
+        val gitHubLink = github?.let { "GitHub: $it" } ?: ""
+        val contactInfo = listOfNotNull(
+            phone?.let { "Телефон: $it" },
+            telegram?.let { "Телеграмм: $it" },
+            email?.let { "Почта: $it" }
+        ).joinToString(", ")
+        return "$fullname; $gitHubLink; $contactInfo"
+    }
+
+    fun getFullName(): String {
+        return lastName + " " + firstName[0] + "." + middleName[0] + ". "
+    }
+
+    fun getGitLink(): String {
+        return github?.let { "GitHub: $it" } ?: ""
+    }
+
+    fun getContactInfo(): String {
+        return listOfNotNull(
+            phone?.let { "Телефон: $it" },
+            telegram?.let { "Телеграмм: $it" },
+            email?.let { "Почта: $it" }
+        ).joinToString(", ")
     }
 }
