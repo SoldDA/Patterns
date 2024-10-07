@@ -1,4 +1,5 @@
 import main.kotlin.DataTable
+import main.kotlin.Data_list_student_short
 import main.kotlin.Student
 import main.kotlin.Student_short
 
@@ -46,10 +47,21 @@ fun main() {
     Student.writeFile("output.txt", studentList)
 
     println("\nData_Table\n")
-    var elem = DataTable(arrayOf(arrayOf(15, 23, 8), arrayOf(16, 24, 9), arrayOf("One", "Two", "Three")))
+    var elem = DataTable(mutableListOf(mutableListOf(15, 23, 8), mutableListOf(16, 24, 9), mutableListOf("One", "Two", "Three")))
     println(elem.getElementByNumber(0, 1))
     println(elem.getRows())
     println(elem.getColumns())
+    var new_list_student = Data_list_student_short(mutableListOf(Student_short(Danil), Student_short(Zhenya), Student_short(studentString)))
+    new_list_student.select(1)
+    new_list_student.select(2)
+    var new_table_student = new_list_student.getTable()
+    for (i in 0..new_table_student.getRows() - 1) {
+        for (j in 0..new_table_student.getColumns() - 1) {
+            print(new_table_student.getElementByNumber(i, j))
+            println(" ")
+        }
+        println()
+    }
 }
 
 

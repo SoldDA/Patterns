@@ -1,23 +1,14 @@
 package main.kotlin
 
-import java.io.DataInput
-
 class Student_short : BaseStudent {
-    private var fullName: String? = null
+    var fullName: String? = null
         set(value) {
             field = value
         }
         get() {
             return field
         }
-    private var git: String? = null
-        set(value) {
-            field = value
-        }
-        get() {
-            return field
-        }
-    private var contact: String? = null
+    var contact: String? = null
         set(value) {
             field = value
         }
