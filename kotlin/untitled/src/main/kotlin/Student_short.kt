@@ -1,0 +1,48 @@
+package main.kotlin
+
+
+class Student_short : BaseStudent {
+    var fullName: String? = null
+        set(value) {
+            field = value
+        }
+        get() {
+            return field
+        }
+    var contact: String? = null
+        set(value) {
+            field = value
+        }
+        get() {
+            return field
+        }
+
+    constructor(studentSerializable: StudentSeriarizable) {
+        fullName = "${studentSerializable.lastName} ${studentSerializable.firstName} ${studentSerializable.middleName}"
+        git = studentSerializable.git
+        contact = studentSerializable.phone ?: studentSerializable.telegram ?: studentSerializable.email
+    }
+
+    constructor(student: Student) {
+        id = id_student
+        fullName = student.getFullName()
+        git = student.getGitLink()
+        contact = student.getContactInfo()
+    }
+
+    constructor(input: String) {
+        id = id_student
+        fullName = input.split(" ").getOrNull(0)
+        git = input.split(" ").getOrNull(1)
+        contact = input.split(" ").getOrNull(2)
+    }
+
+    override fun toString(): String {
+        return """
+            ID: $id
+            ФИО: $fullName
+            GitHub: $git
+            Контакт: $contact
+        """.trimIndent()
+    }
+}
