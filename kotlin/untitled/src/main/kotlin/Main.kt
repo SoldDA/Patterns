@@ -60,11 +60,11 @@ fun main() {
         println()
     }
     // 3 лаба
-    val studentListTxt = Student_list_txt()
+    //val studentListTxt = Student_list_txt()
     val path = "inputForLabThree.txt"
     val n = 0
     val k = 20
-    val studentShortList = studentListTxt.get_k_n_student_short_list(n, k, path)
-    studentShortList.getDataRows().forEach { row -> println(row.joinToString(", ")) }
+    //val studentShortList = studentListTxt.get_k_n_student_short_list(n, k, path)
+    //studentShortList.getDataRows().forEach { row -> println(row.joinToString(", ")) }
 
 }

@@ -2,16 +2,20 @@ package main.kotlin
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
 
-data class StudentSeriarizable(
-    val id: Int = 0,
-    val lastName: String,
-    val firstName: String,
-    val middleName: String,
-    val phone: String? = null,
-    val telegram: String? = null,
-    val email: String? = null,
-    val git: String? = null
+// Необходимо чтобы Jackson знал,
+// как десериализовать объект из YAML или JSON
+data class StudentSeriarizable @JsonCreator constructor(
+    @JsonProperty("id") val id: Int = 0,
+    @JsonProperty("lastName")val lastName: String,
+    @JsonProperty("firstName")val firstName: String,
+    @JsonProperty("middleName")val middleName: String,
+    @JsonProperty("phone")val phone: String? = null,
+    @JsonProperty("telegram")val telegram: String? = null,
+    @JsonProperty("email")val email: String? = null,
+    @JsonProperty("git")val git: String? = null
 ) {
     // Конструктор для создания из существующего Student
     constructor(student: Student): this(

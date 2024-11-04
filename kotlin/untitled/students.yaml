@@ -1,0 +1,25 @@
+---
+- id: 2
+  lastName: "Иванов"
+  firstName: "Иван"
+  middleName: "Иванович"
+  phone: "+79087654321"
+  telegram: "@ivanov"
+  email: "ivanov@mail.ru"
+  git: "https://github.com/ivanov"
+- id: 3
+  lastName: "Сидоров"
+  firstName: "Сидор"
+  middleName: "Сидорович"
+  phone: "+79076543210"
+  telegram: "@sidorov"
+  email: "sidorov@mail.ru"
+  git: "https://github.com/sidorov"
+- id: 4
+  lastName: "Прокопенко"
+  firstName: "Евгений"
+  middleName: "Константинович"
+  phone: null
+  telegram: "@kakaplay"
+  email: "haha@mail.ru"
+  git: "https://github.com/YA-KU-ZA"
