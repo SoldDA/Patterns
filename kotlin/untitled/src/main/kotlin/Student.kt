@@ -5,33 +5,8 @@ import java.io.IOException
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 
-// Необходимо чтобы Jackson знал,
-// как десериализовать объект из YAML или JSON
-data class StudentSeriarizable @JsonCreator constructor(
-    @JsonProperty("id") val id: Int = 0,
-    @JsonProperty("lastName")val lastName: String,
-    @JsonProperty("firstName")val firstName: String,
-    @JsonProperty("middleName")val middleName: String,
-    @JsonProperty("phone")val phone: String? = null,
-    @JsonProperty("telegram")val telegram: String? = null,
-    @JsonProperty("email")val email: String? = null,
-    @JsonProperty("git")val git: String? = null
-) {
-    // Конструктор для создания из существующего Student
-    constructor(student: Student): this(
-        id = student.id,
-        lastName = student.lastName,
-        firstName = student.firstName,
-        middleName = student.middleName,
-        phone = student.phone,
-        telegram = student.telegram,
-        email = student.email,
-        git = student.git
-    )
-}
-
 class Student : BaseStudent {
-    var lastName: String = ""
+    @field: JsonProperty("lastName") var lastName: String = ""
         set(value) {
             if (isValidNames(value)) field = value
             else field = ""
@@ -39,7 +14,7 @@ class Student : BaseStudent {
         get() {
             return field
         }
-    var firstName: String = ""
+    @field: JsonProperty("firstName") var firstName: String = ""
         set(value) {
             if (isValidNames(value)) field = value
             else field = ""
@@ -47,7 +22,7 @@ class Student : BaseStudent {
         get() {
             return field
             }
-    var middleName: String = ""
+    @field: JsonProperty("middleName") var middleName: String = ""
         set(value) {
             if (isValidNames(value)) field = value
             else field = ""
@@ -55,21 +30,21 @@ class Student : BaseStudent {
         get() {
             return field
         }
-    var phone: String? = null
+    @field: JsonProperty("phone") var phone: String? = null
         set(value) {
             if (isValidPhone(value)) field = value
         }
         get() {
             return field
         }
-    var telegram: String? = null
+    @field: JsonProperty("telegram") var telegram: String? = null
         set(value) {
             if (isValidTelegram(value)) field = value
         }
         get() {
             return field
         }
-    var email: String? = null
+    @field: JsonProperty("email") var email: String? = null
         set(value) {
             if (isValidEmail(value)) field = value
         }
@@ -138,6 +113,26 @@ class Student : BaseStudent {
         if (Mail != null && isValidEmail(Mail)) email = Mail
     }
 
+    @JsonCreator constructor(
+        @JsonProperty("id") _id: String = "0",
+        @JsonProperty("git") _git: String? = "",
+        @JsonProperty("lastName") _lastName: String = "",
+        @JsonProperty("firstName") _firstName: String = "",
+        @JsonProperty("middleName") _middleName: String = "",
+        @JsonProperty("phone") _phone: String? = null,
+        @JsonProperty("telegram") _telegram: String? = null,
+        @JsonProperty("email") _email: String? = null,
+    ) {
+        id = _id.toInt()
+        lastName = _lastName
+        firstName = _firstName
+        middleName = _middleName
+        phone = _phone
+        telegram = _telegram
+        email = _email
+        git = _git
+    }
+
     constructor(LastName: String, FirstName: String, MiddleName: String) {
         id = id_student
         lastName = LastName
@@ -154,6 +149,17 @@ class Student : BaseStudent {
         telegram = Telegram
         email = Email
         git = GitHub
+    }
+
+    constructor(_id: Int, _lastName: String, _firstName: String, _middleName: String, _phone: String? = null, _telegram: String? = null, _email: String? = null, _git: String? = null) {
+        id = _id
+        lastName = _lastName
+        firstName = _firstName
+        middleName = _middleName
+        phone = _phone
+        telegram = _telegram
+        email = _email
+        git = _git
     }
 
     constructor(hashStudent: HashMap<String, Any?>) {

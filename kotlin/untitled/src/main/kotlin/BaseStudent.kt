@@ -1,14 +1,15 @@
 package main.kotlin
+import com.fasterxml.jackson.annotation.JsonProperty
 
 open class BaseStudent {
-    var id: Int = -1
+    @field:JsonProperty("id") var id: Int = -1
         set(value) {
             if (value > 0) field = value
         }
         get() {
             return field
         }
-    var git: String? = null
+    @field:JsonProperty("git") var git: String? = null
         set(value) {
             field = value
         }

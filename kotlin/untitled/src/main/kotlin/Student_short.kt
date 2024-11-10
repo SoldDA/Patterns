@@ -17,16 +17,10 @@ class Student_short : BaseStudent {
             return field
         }
 
-    constructor(studentSerializable: StudentSeriarizable) {
-        fullName = "${studentSerializable.lastName} ${studentSerializable.firstName} ${studentSerializable.middleName}"
-        git = studentSerializable.git
-        contact = studentSerializable.phone ?: studentSerializable.telegram ?: studentSerializable.email
-    }
-
     constructor(student: Student) {
         id = id_student
         fullName = student.getFullName()
-        git = student.getGitLink()
+        git = student.git
         contact = student.getContactInfo()
     }
 
