@@ -1,6 +1,5 @@
 package main.kotlin
 
-
 class Student_short : BaseStudent {
     var fullName: String? = null
         set(value) {

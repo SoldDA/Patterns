@@ -1,4 +1,5 @@
 import main.kotlin.*
+import main.kotlin.StudentList.Student_list
 
 fun main() {
 //    val Danil = Student(
@@ -59,4 +60,18 @@ fun main() {
 //        }
 //        println()
 //    }
+
+    var student_list = Student_list("students.txt")
+    // Добавление студента
+    student_list.addStudent(Student("Спиридонов", "Данил", "Александрович"))
+
+    // Получения студента по id
+    println(student_list.getStudentById(1).toString())
+
+    student_list.replaceStudentById(1, Student(1,"Прокопенко", "Евгений", "Константинович"))
+
+    // Получения студента по id
+    println(student_list.getStudentById(1).toString())
+
+    println(student_list.getStudentCount())
 }

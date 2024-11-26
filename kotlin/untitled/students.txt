@@ -1,0 +1,3 @@
+Иванов Иван Иванович +79012345678 @ivanich ivanich@mail.ru https://github.com/ivanov
+Петров Петр Петрович +79098765432 @petrov mail@mail.ru https://github.com/petrov
+Сидоров Сидор Сидорович +79998887766 @sidor sum@mail.ru https://github.com/sidor
