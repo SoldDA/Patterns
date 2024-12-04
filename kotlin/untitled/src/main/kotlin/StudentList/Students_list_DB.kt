@@ -3,7 +3,7 @@ package main.kotlin
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.ResultSet
-import java.util.*
+import main.kotlin.Data_list
 
 import main.kotlin.StudentList.Student_list_interface
 
@@ -55,17 +55,41 @@ class Students_list_DB private constructor(): Student_list_interface {
     }
 
     // Получение подсписка студентов
-    override fun get_k_n_Student_Short(k: Int, n: Int): Data_list<Student_short> {
-        val res = executeQuery("Select * FROM student ORDER BY id LIMIT ${n} OFFSET ${k * n};")
-        val studList = mutableListOf<Student>()
-        res?.let {
-            while (it.next()) {
-                val input = (2..it.metaData.columnCount).joinToString(" ") { index -> it.getString(index) }
-                studList.add(Student(input))
+    override fun get_k_n_Student_Short(k: Int, n: Int, filter: String): MutableList<Student_short> {
+        val result = executeQuery("SELECT * FROM student ${filter} ORDER BY id LIMIT ${n} OFFSET ${k*n};")
+        var input = ""
+        var sl=mutableListOf<Student>()
+        if (result != null) {
+            while (result.next()) {
+                input = ""
+                for (i in 2..result.metaData.columnCount) {
+                    input+=result.getString(i)+" "
+                }
+                sl.add(Student(input, result.getInt(1)))
             }
         }
-        var ss = studList.map { Student_short(it) }
-        return Data_list(ss)
+        var ss = sl.map{Student_short(it)} as MutableList<Student_short>
+
+        return ss
+    }
+
+    override fun getKNStudent(k:Int,n:Int, filter: String): MutableList<Student>
+    {
+        val result = executeQuery("SELECT * FROM student ${filter} ORDER BY id LIMIT ${n} OFFSET ${k*n};")
+        var input = ""
+        var sl=mutableListOf<Student>()
+        if (result != null) {
+            while (result.next()) {
+                input = ""
+                for (i in 2..result.metaData.columnCount) {
+                    input+=result.getString(i)+" "
+                }
+//                println(input)
+                sl.add(Student(input,result.getInt(1)))
+            }
+        }
+
+        return sl
     }
 
     override fun addStudent(student: Student) {

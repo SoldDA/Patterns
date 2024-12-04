@@ -133,22 +133,23 @@ class Student : BaseStudent {
         git = _git
     }
 
-    constructor(LastName: String, FirstName: String, MiddleName: String) {
+    constructor(_lastName: String, _firstName: String, _middleName: String) {
         id = id_student
-        lastName = LastName
-        firstName = FirstName
-        middleName = MiddleName
+        lastName = _lastName
+        firstName = _firstName
+        middleName = _middleName
     }
 
-    constructor(LastName: String, FirstName: String, MiddleName: String, Phone: String? = null, Telegram: String? = null, Email: String? = null, GitHub:String? = null) {
+    constructor(_lastname:String, _firstName:String, _middleName:String,_phone:String?=null,_telegram:String?=null, _email:String?=null,_git:String?=null)
+    {
         id = id_student
-        lastName = LastName
-        firstName = FirstName
-        middleName = MiddleName
-        phone = Phone
-        telegram = Telegram
-        email = Email
-        git = GitHub
+        lastName = _lastname
+        firstName = _firstName
+        middleName = _middleName
+        phone = _phone
+        telegram = _telegram
+        email = _email
+        git = _git
     }
 
     constructor(_id: Int, _lastName: String, _firstName: String, _middleName: String, _phone: String? = null, _telegram: String? = null, _email: String? = null, _git: String? = null) {
@@ -175,6 +176,11 @@ class Student : BaseStudent {
 
     // Конструктор принимающий строку и парсинг её
     constructor(input:String): this (input.split(" ")[0],input.split(" ")[1],input.split(" ")[2],input.split(" ").getOrNull(3),input.split(" ").getOrNull(4),input.split(" ").getOrNull(5),input.split(" ").getOrNull(6))
+    {
+
+    }
+
+    constructor(input:String,id_:Int): this (id_,input.split(" ")[0],input.split(" ")[1],input.split(" ")[2],input.split(" ").getOrNull(3),input.split(" ").getOrNull(4),input.split(" ").getOrNull(5),input.split(" ").getOrNull(6))
     {
 
     }

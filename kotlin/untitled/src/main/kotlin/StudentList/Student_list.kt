@@ -4,7 +4,8 @@ import main.kotlin.*
 
 interface Student_list_interface {
     fun getStudentById(id: Int ): Student?
-    fun get_k_n_Student_Short(k: Int, n: Int): Data_list<Student_short>
+    fun get_k_n_Student_Short(k: Int, n: Int, filter: String): MutableList<Student_short>
+    fun getKNStudent(k: Int, n: Int, filter: String): MutableList<Student>
     fun deleteStudentById(id: Int)
     fun getStudentCount(): Int
     fun addStudent(student: Student)
@@ -26,8 +27,12 @@ class Student_list_adapter(var path: String): Student_list_interface {
     }
 
     // Получение подсписка студентов
-    override fun get_k_n_Student_Short(k: Int, n: Int): Data_list<Student_short> {
-        return student_list?.get_k_n_Student_Short(k, n) ?: Data_list(mutableListOf())
+    override fun get_k_n_Student_Short(k: Int, n: Int, filter: String): MutableList<Student_short> {
+        return student_list?.get_k_n_Student_Short(k, n) ?: mutableListOf()
+    }
+
+    override fun getKNStudent(k: Int, n: Int, filter: String): MutableList<Student> {
+        return student_list?.getKNStudent(k, n) ?: mutableListOf()
     }
 
     // Удаление студента по ID
@@ -66,8 +71,12 @@ class Student_list(path: String): Student_list_interface {
     }
 
     // Получение подсписка студентов
-    override fun get_k_n_Student_Short(k: Int, n: Int): Data_list<Student_short> {
-        return student_list?.get_k_n_Student_Short(k, n) ?: Data_list(mutableListOf())
+    override fun get_k_n_Student_Short(k: Int, n: Int, filter: String): MutableList<Student_short> {
+        return student_list?.get_k_n_Student_Short(k, n, filter) ?: mutableListOf()
+    }
+
+    override fun getKNStudent(k: Int, n: Int, filter: String): MutableList<Student> {
+        return student_list?.getKNStudent(k, n, filter) ?: mutableListOf()
     }
 
     // Удаление студента по ID

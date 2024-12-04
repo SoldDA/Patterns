@@ -13,10 +13,16 @@ open class Student_list_super {
     }
 
     // Получение подсписка студентов
-    fun get_k_n_Student_Short(k: Int, n: Int): Data_list<Student_short> {
+    fun get_k_n_Student_Short(k: Int, n: Int): MutableList<Student_short> {
         var stud = data.subList((k - 1) * n + 1, n)
-        var sstud = stud.map{Student_short(it)}
-        return Data_list(sstud)
+        var sstud = stud.map{Student_short(it)} as MutableList<Student_short>
+        return sstud
+    }
+
+    fun getKNStudent(k: Int, n: Int) : MutableList<Student>
+    {
+        var s = data.subList((k-1)*n+1,n)
+        return s
     }
 
     // Удаление студента по ID

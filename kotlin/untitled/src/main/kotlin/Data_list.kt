@@ -1,6 +1,5 @@
 package main.kotlin
 
-
 open class Data_list<T> (val data: List<T>) {
     private var choice: MutableList<Int> = mutableListOf()
 
